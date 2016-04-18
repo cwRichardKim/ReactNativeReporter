@@ -69,36 +69,59 @@ class Reporter extends Component {
   renderIncident(incident) {
     return (
       <View style={styles.container}>
-        <View style={styles.rightContainer}>
+        <View style={styles.title_container}>
           <Text style={styles.title}>{incident.title}</Text>
+        </View>
+        <View style={styles.incident_filing_info}>
+          <Text style={styles.user}>Filed by {incident.user}</Text>
         </View>
       </View>
     );
   }
 }
 
+var example_json = {
+    "id":1,
+    "title":"Example",
+    "location":"South Hall",
+    "severity":1,
+    "incident_type":"Housing",
+    "comments":"Example comments",
+    "user":"Demo User",
+    "groups":"Students",
+    "status":0,
+    "reported_by":null,
+    "assigned_to":null,
+    "created_at":"2016-03-11T19:52:46.401Z",
+    "updated_at":"2016-03-11T19:52:46.401Z"
+  };
+
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'column',
     backgroundColor: '#F5FCFF',
+    height:70,
+    borderWidth:1,
+    marginBottom:15,
+    backgroundColor:'#FFFFFF',
   },
-  rightContainer: {
+  title_container:{
+    height:20,
+    flexDirection:'row',
+    flex:1,
+    borderWidth:1,
+  },
+  incident_filing_info:{
     flex: 1,
+    flexDirection: 'row',
+    borderWidth:1,
+    height:20,
   },
   title: {
     fontSize: 20,
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  year: {
-    textAlign: 'center',
-  },
-  thumbnail: {
-    width: 53,
-    height: 81,
+    textAlign: 'left',
+    color:'blue',
   },
   listView: {
     paddingTop: 20,
