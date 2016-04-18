@@ -67,17 +67,32 @@ class Reporter extends Component {
   }
 
   renderIncident(incident) {
+    var icon;
+    var incident_type;
     if (incident.severity == '1'){
-      var icon = require('./img/Severity1.png');
+      icon = require('./img/Severity1.png');
     }
     else if (incident.severity == '2'){
-      var icon = require('./img/Severity2.png');
+      icon = require('./img/Severity2.png');
     }
     else if (incident.severity == '3'){
-      var icon = require('./img/Severity3.png');
+      icon = require('./img/Severity3.png');
     }
     else{
-      var icon = require('./img/Severity4.png');
+      icon = require('./img/Severity4.png');
+    }
+
+    if (incident.incident_type=="Housing"){
+      incident_type = styles.incident_type_housing;
+    }
+    else if(incident.incident_type == "Environmental Safety"){
+      incident_type = styles.incident_type_environment;
+    }
+    else if(incident.incident_type == "Dining"){
+      incident_type = styles.incident_type_dining;
+    }
+    else{
+      incident_type = styles.incident_type_health;
     }
 
     return (
@@ -96,7 +111,7 @@ class Reporter extends Component {
           </View>
         </View>
 
-        <View style={styles.incident_type}>
+        <View style={incident_type}>
           <Text style={styles.incident_type_display}> {incident.incident_type} </Text>
         </View>
 
@@ -131,16 +146,41 @@ var styles = StyleSheet.create({
     marginRight:5,
     backgroundColor:'#FFFFFF',
   },
-  incident_type:{
+  incident_type_housing:{
     height:20,
-    backgroundColor:'red',
     marginTop:40,
     marginRight:5,
     paddingTop:5,
     paddingBottom:5,
+    backgroundColor:'#40a3e4',
+  },
+  incident_type_dining:{
+    height:20,
+    marginTop:40,
+    marginRight:5,
+    paddingTop:5,
+    paddingBottom:5,
+    backgroundColor:'#f88148',
+  },
+  incident_type_environment:{
+    height:20,
+    marginTop:40,
+    marginRight:5,
+    paddingTop:5,
+    paddingBottom:5,
+    backgroundColor:'#2eb37c',
+  },
+  incident_type_health:{
+    height:20,
+    marginTop:40,
+    marginRight:5,
+    paddingTop:5,
+    paddingBottom:5,
+    backgroundColor:'#af8cd1',
   },
   incident_type_display:{
     fontSize:10,
+    color:'white',
   },
   incident_body:{
     flex: 1,
