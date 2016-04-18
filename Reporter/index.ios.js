@@ -67,14 +67,39 @@ class Reporter extends Component {
   }
 
   renderIncident(incident) {
+    if (incident.severity == '1'){
+      var icon = require('./img/Severity1.png');
+    }
+    else if (incident.severity == '2'){
+      var icon = require('./img/Severity2.png');
+    }
+    else if (incident.severity == '3'){
+      var icon = require('./img/Severity3.png');
+    }
+    else{
+      var icon = require('./img/Severity4.png');
+    }
+
     return (
-      <View style={styles.container}>
-        <View style={styles.title_container}>
-          <Text style={styles.title}>{incident.title}</Text>
+      <View style={styles.incident}>
+
+        <View style={styles.incident_severity}>
+          <Image source={icon} />
         </View>
-        <View style={styles.incident_filing_info}>
-          <Text style={styles.user}>Filed by {incident.user}</Text>
+
+        <View style={styles.incident_body}>
+          <View style={styles.title_container}>
+            <Text style={styles.title}>{incident.title}</Text>
+          </View>
+          <View style={styles.incident_filing_info}>
+            <Text style={styles.user}>Filed by {incident.user}</Text>
+          </View>
         </View>
+
+        <View style={styles.incident_type}>
+          <Text style={styles.incident_type_display}> {incident.incident_type} </Text>
+        </View>
+
       </View>
     );
   }
@@ -97,12 +122,31 @@ var example_json = {
   };
 
 var styles = StyleSheet.create({
-  container: {
+  incident: {
+    flex: 1,
+    flexDirection: 'row',
+    height:70,
+    marginBottom:15,
+    marginLeft:5,
+    marginRight:5,
+    backgroundColor:'#FFFFFF',
+  },
+  incident_type:{
+    height:20,
+    backgroundColor:'red',
+    marginTop:40,
+    marginRight:5,
+    paddingTop:5,
+    paddingBottom:5,
+  },
+  incident_type_display:{
+    fontSize:10,
+  },
+  incident_body:{
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#F5FCFF',
     height:70,
-    borderWidth:1,
     marginBottom:15,
     backgroundColor:'#FFFFFF',
   },
@@ -110,22 +154,29 @@ var styles = StyleSheet.create({
     height:20,
     flexDirection:'row',
     flex:1,
-    borderWidth:1,
+    paddingTop:5,
   },
   incident_filing_info:{
     flex: 1,
     flexDirection: 'row',
-    borderWidth:1,
     height:20,
+  },
+  severity_display:{
+    fontSize:30,
+  },
+  incident_severity:{
+    paddingTop:13,
+    marginLeft:20,
+    marginRight:25,
   },
   title: {
     fontSize: 20,
     textAlign: 'left',
-    color:'blue',
+    color:'#337ab7',
   },
   listView: {
     paddingTop: 20,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#e8ecf3',
   },
 });
 
