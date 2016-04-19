@@ -60,7 +60,7 @@ class Reporter extends Component {
     return (
       <View style={styles.container}>
         <Text>
-          Loading movies...
+          Loading incidents...
         </Text>
       </View>
     );
@@ -119,22 +119,6 @@ class Reporter extends Component {
     );
   }
 }
-
-var example_json = {
-    "id":1,
-    "title":"Example",
-    "location":"South Hall",
-    "severity":1,
-    "incident_type":"Housing",
-    "comments":"Example comments",
-    "user":"Demo User",
-    "groups":"Students",
-    "status":0,
-    "reported_by":null,
-    "assigned_to":null,
-    "created_at":"2016-03-11T19:52:46.401Z",
-    "updated_at":"2016-03-11T19:52:46.401Z"
-  };
 
 var styles = StyleSheet.create({
   incident: {
