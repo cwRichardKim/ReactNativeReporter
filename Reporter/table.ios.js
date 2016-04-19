@@ -2,6 +2,7 @@
 
 import React, {
   AppRegistry,
+  AlertIOS,
   Component,
   Image,
   ListView,
@@ -10,10 +11,12 @@ import React, {
   View,
   TouchableOpacity,
   TouchableHighlight,
+  NavigatorIOS,
 } from 'react-native';
 
 
 var REQUEST_URL = 'http://incidentreport-120.herokuapp.com/incidents.json';
+var ViewIncident= require('./view_incident.ios');
 
 class Table extends Component {
   constructor(props) {
@@ -31,8 +34,18 @@ class Table extends Component {
     this.fetchData();
   }
 
-  selectIncident(){
-    console.log("Selected incident");
+  selectIncident(incident){
+    console.log("got in");
+    console.log(incident.title);
+    this.props.navigator.push({
+        title: incident.title,
+        component: ViewIncident,
+        passProps: {incident},
+      });
+  }
+
+  test_func(){
+    AlertIOS.alert("hit me");
   }
 
   fetchData() {
@@ -48,12 +61,12 @@ class Table extends Component {
   }
 
   render() {
+    console.log("In render function");
     if (!this.state.loaded) {
       return this.renderLoadingView();
     }
 
     return (
-      
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderIncident.bind(this)}
@@ -104,7 +117,7 @@ class Table extends Component {
     }
 
     return (
-      <TouchableOpacity onPress={this.selectIncident.bind(this)}>
+      <TouchableOpacity onPress={() => this.selectIncident(incident)}>
         <View 
         style={styles.incident}
         >

@@ -13,13 +13,12 @@ import React, {
 
 class ViewIncident extends Component {
 
-
   render() {
-
+    var incident = this.props.incident;
     return (
       <View>
         <Text>
-          This will be where you view incidents
+          {incident.title}
         </Text>
       </View>
     );
