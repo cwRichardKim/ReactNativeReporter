@@ -204,7 +204,11 @@ var styles = StyleSheet.create({
   incident_body:{
     flex: 1,
     flexDirection: 'column',
-  },
+    backgroundColor: '#F5FCFF',
+    height:70,
+    marginBottom:15,
+    backgroundColor:'#FFFFFF',
+  }, 
   title_container:{
     flexDirection:'row',
     flex:1,
