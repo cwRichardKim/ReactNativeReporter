@@ -12,6 +12,7 @@ import React, {
   TouchableOpacity,
   TouchableHighlight,
   NavigatorIOS,
+  RefreshControl,
 } from 'react-native';
 
 
@@ -27,7 +28,13 @@ class Table extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loaded: false,
+      refreshing: false,
     };
+  }
+
+  onRefresh() {
+    this.setState({refreshing: true});
+    this.fetchData();
   }
 
   componentDidMount() {
@@ -47,9 +54,12 @@ class Table extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData),
+          dataSource: this.state.dataSource.cloneWithRows(responseData.reverse()),
           loaded: true,
         });
+      })
+      .then(() => {
+        this.setState({refreshing: false});
       })
       .done();
   }
@@ -61,6 +71,12 @@ class Table extends Component {
 
     return (
       <ListView
+      refreshControl={
+        <RefreshControl
+          refreshing={this.state.refreshing}
+          onRefresh={this.onRefresh.bind(this)}
+        />
+      }
         dataSource={this.state.dataSource}
         renderRow={this.renderIncident.bind(this)}
         style={styles.listView}
