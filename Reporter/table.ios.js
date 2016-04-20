@@ -125,6 +125,10 @@ class Table extends Component {
       incident_type = styles.incident_type_health;
     }
 
+    var maxTitleLength = 25;
+    var title = incident.title.length >= maxTitleLength ? incident.title.substring(0, maxTitleLength) + "..." : incident.title;
+    var userName = incident.user.length >= maxTitleLength ? incident.user.substring(0, maxTitleLength) + "..." : incident.user;
+
     return (
       <TouchableOpacity onPress={() => this.selectIncident(incident)}>
         <View
@@ -137,10 +141,10 @@ class Table extends Component {
 
           <View style={styles.incident_body}>
             <View style={styles.title_container}>
-              <Text style={styles.title}>{incident.title}</Text>
+              <Text style={styles.title}>{title}</Text>
             </View>
             <View style={styles.incident_filing_info}>
-              <Text style={styles.user}>Filed by {incident.user}</Text>
+              <Text style={styles.user}>Filed by {userName}</Text>
             </View>
           </View>
 
