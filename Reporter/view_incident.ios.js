@@ -2,15 +2,72 @@
 
 import React, {
   AppRegistry,
+  MapView,
   Component,
   Image,
   ListView,
   StyleSheet,
+  TextInput,
+  ScrollView,
   Text,
   View,
 } from 'react-native';
 
-import MapView from 'react-native-maps';
+var { PropTypes } = React;
+
+var If = React.createClass({
+    render: function() {
+        if (this.props.test) {
+            return this.props.children;
+        }
+        else {
+            return false;
+        }
+    }
+});
+
+var region =  {
+        latitude: 42.408994,
+        longitude: -71.119804,
+        latitudeDelta: 0.02,
+        longitudeDelta: 0.02,
+      }
+
+var AnnotationExample = React.createClass({
+
+  getInitialState() {
+    return {
+      isFirstLoad: true,
+      annotations: [],
+      mapRegion: region,
+    };
+  },
+
+  render() {
+    if (this.state.isFirstLoad) {
+      var onRegionChangeComplete = (region) => {
+        this.setState({
+          isFirstLoad: false,
+          annotations: [{
+            longitude: region.longitude,
+            latitude: region.latitude,
+            ...this.props.annotation,
+          }],
+        });
+      };
+    }
+
+    return (
+      <MapView
+        style={styles.map}
+        onRegionChangeComplete={onRegionChangeComplete}
+        region={this.state.mapRegion}
+        annotations={this.state.annotations}
+      />
+    );
+  },
+
+});
 
 class ViewIncident extends Component {
 
@@ -24,12 +81,6 @@ class ViewIncident extends Component {
         title: "Lane Hall",
         description: "Incident Location"
       };
-    var regionText = {
-      latitude: '0',
-      longitude: '0',
-      latitudeDelta: '0',
-      longitudeDelta: '0',
-    };
     if (incident.severity == '1'){
       icon = require('./img/Severity1.png');
     }
@@ -63,7 +114,11 @@ class ViewIncident extends Component {
       status = "COMPLETED";
     }
     return (
-      <View style={styles.container}>
+      <ScrollView
+          automaticallyAdjustContentInsets={false}
+          scrollEventThrottle={200}
+          style={styles.container}>
+
         <View style={styles.title_container}>
           <Text style={styles.title}>
             {incident.title}
@@ -88,7 +143,11 @@ class ViewIncident extends Component {
             <Text style={styles.incident_type_display}> {incident.incident_type} </Text>
           </View>
         </View>
-
+        <If test={incident.image}>
+          <View style={styles.card}>
+            <Image source={incident.image} />
+          </View>
+        </If>
         <View style={styles.card}>
           <Text style={styles.status}> STATUS: {status}</Text>
         </View>
@@ -100,23 +159,8 @@ class ViewIncident extends Component {
           </View>
         </View>
         <Text style={styles.sub_title}> Location </Text>
-        <View style={styles.card}>
-          <MapView 
-            style={styles.map}
-            initialRegion={{
-              latitude: 42.408994,
-              longitude: -71.119804,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
-              }}
-          >
-              <MapView.Marker 
-                  coordinate={marker.myLatLng}
-                  title={marker.title}
-                  description={marker.description}
-              />
-          </MapView>
-        </View>
+
+          <AnnotationExample style={styles.map}/>
 
         <Text style={styles.sub_title}> Departments </Text>
         <View style={styles.card}>
@@ -128,7 +172,7 @@ class ViewIncident extends Component {
           <Text style={styles.sub_text}>{incident.assigned_to} </Text>
         </View>
 
-      </View>
+      </ScrollView>
     );
   }
 
@@ -153,16 +197,34 @@ var styles = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: '#eceff3'
   },
-  maps: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+  map: {
+    height: 150,
+    borderWidth: 1,
+    borderColor: '#000000',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textInput: {
+    width: 150,
+    height: 20,
+    borderWidth: 0.5,
+    borderColor: '#aaaaaa',
+    fontSize: 13,
+    padding: 4,
+  },
+  changeButton: {
+    alignSelf: 'center',
+    marginTop: 5,
+    padding: 3,
+    borderWidth: 0.5,
+    borderColor: '#777777',
   },
   sub_text: {
     fontSize:16,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   separator: {
     marginTop: 5,
