@@ -28,7 +28,7 @@ class Reporter extends Component {
       style={styles.container}
       translucent={false}
       initialRoute={{
-        title: 'Table',
+        title: 'Incidents',
         component: Table,
       }}
       >

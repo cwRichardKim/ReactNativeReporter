@@ -35,17 +35,11 @@ class Table extends Component {
   }
 
   selectIncident(incident){
-    console.log("got in");
-    console.log(incident.title);
     this.props.navigator.push({
         title: incident.title,
         component: ViewIncident,
         passProps: {incident},
       });
-  }
-
-  test_func(){
-    AlertIOS.alert("hit me");
   }
 
   fetchData() {
@@ -61,7 +55,6 @@ class Table extends Component {
   }
 
   render() {
-    console.log("In render function");
     if (!this.state.loaded) {
       return this.renderLoadingView();
     }
@@ -118,7 +111,7 @@ class Table extends Component {
 
     return (
       <TouchableOpacity onPress={() => this.selectIncident(incident)}>
-        <View 
+        <View
         style={styles.incident}
         >
 
@@ -135,7 +128,7 @@ class Table extends Component {
             </View>
           </View>
 
-          <View style={incident_type}>
+          <View style={[styles.incident_type, incident_type]}>
             <Text style={styles.incident_type_display}> {incident.incident_type} </Text>
           </View>
 
@@ -149,43 +142,39 @@ class Table extends Component {
 var styles = StyleSheet.create({
   incident: {
     flex: 1,
+    alignItems: 'center',
     flexDirection: 'row',
-    height:70,
-    marginBottom:15,
-    marginLeft:5,
-    marginRight:5,
+    height:110,
+    marginBottom:10,
+    marginLeft:10,
+    marginRight:10,
     backgroundColor:'#FFFFFF',
+    borderRadius:3,
+    shadowColor: '#666666',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    shadowOffset: {
+        height:3,
+        width:3,
+    },
+  },
+  incident_type:{
+    height:22,
+    alignSelf: 'flex-end',
+    margin: 10,
+    padding:5,
+    borderRadius:2,
   },
   incident_type_housing:{
-    height:20,
-    marginTop:40,
-    marginRight:5,
-    paddingTop:5,
-    paddingBottom:5,
     backgroundColor:'#40a3e4',
   },
   incident_type_dining:{
-    height:20,
-    marginTop:40,
-    marginRight:5,
-    paddingTop:5,
-    paddingBottom:5,
     backgroundColor:'#f88148',
   },
   incident_type_environment:{
-    height:20,
-    marginTop:40,
-    marginRight:5,
-    paddingTop:5,
-    paddingBottom:5,
     backgroundColor:'#2eb37c',
   },
   incident_type_health:{
-    height:20,
-    marginTop:40,
-    marginRight:5,
-    paddingTop:5,
-    paddingBottom:5,
     backgroundColor:'#af8cd1',
   },
   incident_type_display:{
@@ -201,10 +190,8 @@ var styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
   }, 
   title_container:{
-    height:20,
     flexDirection:'row',
     flex:1,
-    paddingTop:5,
   },
   incident_filing_info:{
     flex: 1,
@@ -215,7 +202,6 @@ var styles = StyleSheet.create({
     fontSize:30,
   },
   incident_severity:{
-    paddingTop:13,
     marginLeft:20,
     marginRight:25,
   },
@@ -225,7 +211,7 @@ var styles = StyleSheet.create({
     color:'#337ab7',
   },
   listView: {
-    paddingTop: 20,
+    paddingTop: 10,
     backgroundColor: '#e8ecf3',
   },
 });
