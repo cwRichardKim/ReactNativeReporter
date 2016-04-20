@@ -1,6 +1,5 @@
 'use strict';
 
-
 import React, {
   AppRegistry,
   Component,
@@ -11,6 +10,8 @@ import React, {
   View,
 } from 'react-native';
 
+import MapView from 'react-native-maps';
+
 class ViewIncident extends Component {
 
   render() {
@@ -18,6 +19,17 @@ class ViewIncident extends Component {
     var icon;
     var incident_type;
     var status;
+    var marker = {
+        myLatLng: {'latitude': 42.408994, 'longitude': -71.119804},
+        title: "Lane Hall",
+        description: "Incident Location"
+      };
+    var regionText = {
+      latitude: '0',
+      longitude: '0',
+      latitudeDelta: '0',
+      longitudeDelta: '0',
+    };
     if (incident.severity == '1'){
       icon = require('./img/Severity1.png');
     }
@@ -87,7 +99,34 @@ class ViewIncident extends Component {
             <Image source={icon} />
           </View>
         </View>
+        <Text style={styles.sub_title}> Location </Text>
+        <View style={styles.card}>
+          <MapView 
+            style={styles.map}
+            initialRegion={{
+              latitude: 42.408994,
+              longitude: -71.119804,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421
+              }}
+          >
+              <MapView.Marker 
+                  coordinate={marker.myLatLng}
+                  title={marker.title}
+                  description={marker.description}
+              />
+          </MapView>
+        </View>
 
+        <Text style={styles.sub_title}> Departments </Text>
+        <View style={styles.card}>
+          <Text style={styles.sub_text}>{incident.groups} </Text>
+        </View>
+
+        <Text style={styles.sub_title}> Assigned To </Text>
+        <View style={styles.card}>
+          <Text style={styles.sub_text}>{incident.assigned_to} </Text>
+        </View>
 
       </View>
     );
@@ -113,6 +152,17 @@ var styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 20,
     backgroundColor: '#eceff3'
+  },
+  maps: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  sub_text: {
+    fontSize:16,
+    textAlign: 'center',
   },
   separator: {
     marginTop: 5,
@@ -143,10 +193,10 @@ var styles = StyleSheet.create({
   },
   card: {
     backgroundColor: 'white',
-    paddingTop: 10,
+    paddingTop: 15,
     paddingLeft: 7,
     paddingRight: 7,
-    paddingBottom: 10,
+    paddingBottom: 15,
     marginBottom: 15,
   },
     card_main: {
