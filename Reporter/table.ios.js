@@ -199,7 +199,7 @@ var styles = StyleSheet.create({
     height:70,
     marginBottom:15,
     backgroundColor:'#FFFFFF',
-  },
+  }, 
   title_container:{
     height:20,
     flexDirection:'row',
