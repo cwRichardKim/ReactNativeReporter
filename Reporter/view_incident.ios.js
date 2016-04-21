@@ -126,21 +126,21 @@ class ViewIncident extends Component {
         </View>
 
         <View style={styles.incident_filing_info}>
-          <Text style={styles.user}>Filed by {incident.user}</Text>
+          <Text style={styles.user}>Filed by <Text style={{color:'#1D8CE0'}}>{incident.user}</Text></Text>
         </View>
 
-        <View style={styles.card_main}>
-
+        <View style={[styles.card_main, styles.shadow]}>
           <View style={styles.body}>
-            <Text style={styles.user}>{incident.user} posted</Text>
+            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              <Text style={styles.user}>{incident.user} posted</Text>
+              <View style={[incident_type, styles.incident_type]}>
+                <Text style={styles.incident_type_display}> {incident.incident_type} </Text>
+              </View>
+            </View>
             <View style={styles.separator} />
             <View style={styles.commnents_container}>
               <Text> {incident.comments} </Text>
             </View>
-          </View>
-
-          <View style={incident_type}>
-            <Text style={styles.incident_type_display}> {incident.incident_type} </Text>
           </View>
         </View>
         <If test={incident.image}>
@@ -148,27 +148,25 @@ class ViewIncident extends Component {
             <Image source={incident.image} />
           </View>
         </If>
-        <View style={styles.card}>
+        <View style={[styles.card, styles.shadow]}>
           <Text style={styles.status}> STATUS: {status}</Text>
         </View>
 
-        <Text style={styles.sub_title}> Urgency </Text>
-        <View style={styles.card}>
-          <View style={styles.incident_severity}>
-            <Image source={icon} />
-          </View>
+        <View style={[styles.card, styles.shadow, {flexDirection:'row', justifyContent:'center'}]}>
+          <Text style={{alignSelf:'center', paddingRight:15, fontWeight:'bold'}}> URGENCY: </Text>
+          <Image source={icon} />
         </View>
         <Text style={styles.sub_title}> Location </Text>
-
+        <View style={[{backgroundColor:'#FFFFFF', padding:10, marginBottom:10}, styles.shadow]}>
           <AnnotationExample style={styles.map}/>
-
+        </View>
         <Text style={styles.sub_title}> Departments </Text>
-        <View style={styles.card}>
+        <View style={[styles.card, styles.shadow]}>
           <Text style={styles.sub_text}>{incident.groups} </Text>
         </View>
 
         <Text style={styles.sub_title}> Assigned To </Text>
-        <View style={styles.card}>
+        <View style={[styles.card, styles.shadow]}>
           <Text style={styles.sub_text}>{incident.assigned_to} </Text>
         </View>
 
@@ -180,7 +178,7 @@ class ViewIncident extends Component {
 
 var styles = StyleSheet.create({
   title: {
-    fontSize: 30,
+    fontSize: 40,
     textAlign: 'left',
     color:'#3D5A6A',
   },
@@ -198,9 +196,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#eceff3'
   },
   map: {
-    height: 150,
-    borderWidth: 1,
-    borderColor: '#000000',
+    height: 160,
   },
   row: {
     flexDirection: 'row',
@@ -227,7 +223,7 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   separator: {
-    marginTop: 5,
+    marginTop: 15,
     marginBottom: 15,
     height: 1,
     backgroundColor: '#dddddd',
@@ -235,23 +231,33 @@ var styles = StyleSheet.create({
   status: {
     textAlign: 'center',
     fontWeight: 'bold',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   title_container: {
-    marginBottom: 10,
-  },
-  incident_severity:{
-    marginLeft: 155,
+    marginBottom: 5,
   },
   incident_filing_info:{
     height:20,
-    marginBottom: 15,
+    marginBottom: 20,
   },
   commnents_container: {
     flex: 1,
     flexDirection: 'column',
   },
   user: {
-    fontSize: 17,
+    fontSize: 15,
+    color:'#555555',
+  },
+  shadow: {
+    borderRadius:3,
+    shadowColor: '#666666',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    shadowOffset: {
+        height:3,
+        width:3,
+    },
   },
   card: {
     backgroundColor: 'white',
@@ -261,50 +267,36 @@ var styles = StyleSheet.create({
     paddingBottom: 15,
     marginBottom: 15,
   },
-    card_main: {
+  card_main: {
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'white',
-    paddingTop: 10,
-    paddingLeft: 7,
-    paddingRight: 7,
-    paddingBottom: 10,
+    paddingTop: 20,
+    paddingLeft: 25,
+    paddingRight: 25,
+    paddingBottom: 25,
     marginBottom: 15,
   },
   body: {
     flex: 1,
     flexDirection: 'column',
   },
+  incident_type:{
+    height:22,
+    padding:5,
+    marginTop:-3,
+    borderRadius:2,
+  },
   incident_type_housing:{
-    height:20,
-    marginTop:0,
-    marginRight:5,
-    paddingTop:5,
-    paddingBottom:5,
     backgroundColor:'#40a3e4',
   },
   incident_type_dining:{
-    height:20,
-    marginTop:0,
-    marginRight:5,
-    paddingTop:5,
-    paddingBottom:5,
     backgroundColor:'#f88148',
   },
   incident_type_environment:{
-    height:20,
-    marginTop:0,
-    marginRight:5,
-    paddingTop:5,
-    paddingBottom:5,
     backgroundColor:'#2eb37c',
   },
   incident_type_health:{
-    height:20,
-    marginTop:0,
-    marginRight:5,
-    paddingTop:5,
-    paddingBottom:5,
     backgroundColor:'#af8cd1',
   },
   incident_type_display:{
